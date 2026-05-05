@@ -2234,3 +2234,234 @@ strong {
     bottom: 5.2%;
   }
 }
+/* =====================================================
+   FIX MOBILE DOUBLE TAP
+   Dán đoạn này ở CUỐI CÙNG file style.css
+   Không đổi form, chỉ tắt hover trên điện thoại
+===================================================== */
+
+/* Giúp mobile nhận tap nhanh hơn */
+button,
+a,
+.header-item,
+.item-tab2,
+.item-button,
+.tab2__arrow,
+.tab2-detail__nav-btn,
+.tab3__sect-btn,
+.tab3__tag,
+.tab4__center-btn,
+.tab4__arrow,
+.nav-right__toggle,
+.nav-right__downloads a,
+.nav-right__top,
+.download-mobile button {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Chỉ thiết bị có chuột thật mới được chạy hover */
+@media (hover: hover) and (pointer: fine) {
+  .header-item:hover {
+    transform: translateY(-0.08vw);
+    filter: brightness(1.12);
+  }
+
+  .tab2__arrow:hover {
+    transform: scale(1.12);
+    filter: brightness(1.15);
+  }
+
+  .item-tab2:hover .item-nv {
+    transform: translateX(-50%);
+  }
+
+  .item-tab2:hover .item-bg {
+    transform: translate(-58%, -50%);
+  }
+
+  .item-tab2:hover .item-button {
+    transform: translateX(-50%) scale(1.04);
+    filter: brightness(1.08);
+  }
+
+  .tab2-detail__breadcrumb a:hover {
+    color: #ffe9a6;
+  }
+
+  .tab2-detail__nav-btn:hover {
+    transform: scale(1.04);
+    filter: brightness(1.12);
+  }
+
+  .tab3__sect-btn:hover .tab3__sect-active-bg {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .tab3__sect-btn:hover .tab3__sect-icon {
+    transform: translateX(-50%) translateY(-8%);
+  }
+
+  .tab3__sect-btn:hover .tab3__sect-name {
+    bottom: 10%;
+    color: #1c9a85;
+  }
+
+  .tab3__tag:hover {
+    filter: brightness(0.85);
+  }
+
+  .tab4__center-btn:hover {
+    transform: translate(-50%, -50%) scale(1.08);
+    filter: brightness(1.15);
+  }
+
+  .tab4__arrow:hover {
+    transform: translateY(-50%) scale(1.12);
+    filter: brightness(1.15);
+  }
+
+  .nav-right__downloads a:hover {
+    transform: scale(1.04);
+    filter: brightness(1.08);
+  }
+
+  .nav-right__top:hover {
+    transform: translateX(-50%) scale(1.04);
+    filter: brightness(1.1);
+  }
+
+  .item-tab2--tin-tuc:hover .item-nv,
+  .item-tab2--su-kien:hover .item-nv,
+  .item-tab2--thong-bao:hover .item-nv,
+  .item-tab2--cskh:hover .item-nv {
+    transform: translateX(-57%);
+  }
+
+  .item-tab2--tin-tuc:hover .item-bg {
+    transform: translate(-56%, -50%);
+  }
+
+  .item-tab2--su-kien:hover .item-bg {
+    transform: translate(-60%, -50%);
+  }
+
+  .item-tab2--thong-bao:hover .item-bg {
+    transform: translate(-57%, -50%);
+  }
+
+  .item-tab2--cskh:hover .item-bg {
+    transform: translate(-58%, -50%);
+  }
+}
+
+/* Trên điện thoại: tắt toàn bộ hiệu ứng hover để không phải bấm 2 lần */
+@media (hover: none) and (pointer: coarse) {
+  .header-item:hover {
+    transform: none;
+    filter: none;
+  }
+
+  .tab2__arrow:hover {
+    transform: none;
+    filter: none;
+  }
+
+  .item-tab2:hover .item-button {
+    transform: translateX(-50%);
+    filter: none;
+  }
+
+  .item-tab2:hover .item-bg {
+    transform: translate(-35%, -50%);
+  }
+
+  .item-tab2:hover .item-nv {
+    transform: translateX(-62%);
+  }
+
+  .item-tab2--tin-tuc:hover .item-nv,
+  .item-tab2--su-kien:hover .item-nv,
+  .item-tab2--thong-bao:hover .item-nv,
+  .item-tab2--cskh:hover .item-nv {
+    transform: translateX(-70%);
+  }
+
+  .tab2-detail__breadcrumb a:hover {
+    color: #fff;
+  }
+
+  .tab2-detail__nav-btn:hover:not(.is-active) {
+    transform: none;
+    filter: none;
+  }
+
+  .tab3__sect-btn:hover:not(.is-active) .tab3__sect-active-bg {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10%);
+  }
+
+  .tab3__sect-btn:hover:not(.is-active) .tab3__sect-icon {
+    transform: translateX(-50%);
+  }
+
+  .tab3__sect-btn:hover:not(.is-active) .tab3__sect-name {
+    bottom: 4%;
+    color: #17a58e;
+  }
+
+  .tab3__tag:hover {
+    filter: none;
+  }
+
+  .tab4__center-btn:hover {
+    transform: translate(-50%, -50%);
+    filter: none;
+  }
+
+  .tab4__arrow:hover {
+    transform: translateY(-50%);
+    filter: none;
+  }
+
+  .nav-right__downloads a:hover {
+    transform: none;
+    filter: none;
+  }
+
+  .nav-right__top:hover {
+    transform: translateX(-50%);
+    filter: none;
+  }
+
+  /* Mobile vẫn có cảm giác bấm, nhưng không làm đổi bố cục */
+  .header-item:active,
+  .tab2__arrow:active,
+  .tab2-detail__nav-btn:active,
+  .tab3__sect-btn:active,
+  .tab3__tag:active,
+  .nav-right__downloads a:active {
+    transform: scale(0.96);
+  }
+
+  .item-tab2:active {
+    transform: scale(0.97);
+  }
+
+  .item-button:active {
+    transform: translateX(-50%) scale(0.96);
+  }
+
+  .tab4__center-btn:active {
+    transform: translate(-50%, -50%) scale(0.96);
+  }
+
+  .tab4__arrow:active {
+    transform: translateY(-50%) scale(0.96);
+  }
+
+  .nav-right__top:active {
+    transform: translateX(-50%) scale(0.96);
+  }
+}
