@@ -230,7 +230,7 @@ const sectKeys = Object.keys(sectData);
 /* ================= INIT ================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-  renderSlides("#tab2Slides", sliderData.tab2);
+  
   renderTab2Cards();
   renderTab2DetailNav();
   renderTab3Nav();
