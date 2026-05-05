@@ -1,7 +1,11 @@
 "use strict";
 
+
+
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+
+const swiperInstances = {};
 
 const imgTag = (src, alt = "", lazy = true) => {
   const lazyAttrs = lazy ? ' loading="lazy" decoding="async"' : "";
@@ -230,13 +234,14 @@ const sectKeys = Object.keys(sectData);
 /* ================= INIT ================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-  
+  renderSlides("#tab2Slides", sliderData.tab2);
+  renderSlides("#tab4Slides", sliderData.tab4);
+
   renderTab2Cards();
   renderTab2DetailNav();
   renderTab3Nav();
-  renderSlides("#tab4Slides", sliderData.tab4);
 
-  initSwiper(".tab2Swiper", {
+  swiperInstances.tab2 = initSwiper(".tab2Swiper", {
     delay: 2500,
     nextEl: ".tab2__arrow--next",
     prevEl: ".tab2__arrow--prev",
@@ -244,24 +249,24 @@ document.addEventListener("DOMContentLoaded", () => {
     dotClass: "tab2__dot",
   });
 
-  initTab2Detail();
-  initTab3Sect();
-  initNavRight();
-
-  initSwiper(".tab4Swiper", {
+  swiperInstances.tab4 = initSwiper(".tab4Swiper", {
     delay: 3000,
     nextEl: ".tab4__arrow--next",
     prevEl: ".tab4__arrow--prev",
     dotsEl: ".tab4__dots",
     dotClass: "tab4__dot",
   });
+
+  initTab2Detail();
+  initTab3Sect();
+  initNavRight();
 });
 
 /* ================= COMMON ================= */
 
 function renderSlides(containerSelector, slides) {
   const container = $(containerSelector);
-  if (!container || !slides?.length) return;
+  if (!container || !slides?.length || container.children.length > 0) return;
 
   container.innerHTML = slides
     .map((src, index) => `
@@ -273,22 +278,28 @@ function renderSlides(containerSelector, slides) {
 }
 
 function initSwiper(selector, config) {
-  if (typeof Swiper === "undefined") return;
+  if (typeof Swiper === "undefined") return null;
 
   const swiperEl = $(selector);
-  if (!swiperEl) return;
+  if (!swiperEl) return null;
 
   const slideCount = $$(".swiper-slide", swiperEl).length;
+  if (slideCount === 0) return null;
 
-  new Swiper(selector, {
+  return new Swiper(selector, {
     loop: slideCount > 1,
     speed: 700,
-    autoplay: slideCount > 1
-      ? {
-          delay: config.delay,
-          disableOnInteraction: false,
-        }
-      : false,
+    observer: true,
+    observeParents: true,
+    resizeObserver: true,
+    autoplay:
+      slideCount > 1
+        ? {
+            delay: config.delay,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: false,
+          }
+        : false,
     navigation: {
       nextEl: config.nextEl,
       prevEl: config.prevEl,
@@ -303,11 +314,25 @@ function initSwiper(selector, config) {
   });
 }
 
+function restartSwiper(swiper) {
+  if (!swiper) return;
+
+  setTimeout(() => {
+    swiper.update();
+    swiper.slideToLoop?.(swiper.realIndex || 0, 0, false);
+
+    if (swiper.autoplay) {
+      swiper.autoplay.stop();
+      swiper.autoplay.start();
+    }
+  }, 120);
+}
+
 /* ================= TAB 2 ================= */
 
 function renderTab2Cards() {
   const container = $("#tab2Cards");
-  if (!container) return;
+  if (!container || container.children.length > 0) return;
 
   container.innerHTML = tab2Cards
     .map((card) => {
@@ -341,7 +366,7 @@ function renderTab2Cards() {
 
 function renderTab2DetailNav() {
   const nav = $("#tab2DetailNav");
-  if (!nav) return;
+  if (!nav || nav.children.length > 0) return;
 
   nav.innerHTML = Object.entries(tab2Details)
     .map(([key, detail], index) => `
@@ -367,6 +392,8 @@ function initTab2Detail() {
     if (!detail) return;
 
     landing.classList.add("is-detail-open");
+    swiperInstances.tab2?.autoplay?.stop();
+
     detailTitle.textContent = detail.title;
     detailContent.innerHTML = detail.content || "";
 
@@ -379,30 +406,40 @@ function initTab2Detail() {
 
   const closeDetail = () => {
     landing.classList.remove("is-detail-open");
+    restartSwiper(swiperInstances.tab2);
     scrollToEl(tab2 || landing);
   };
 
-  $("#tab2Cards")?.addEventListener("click", (e) => {
-    const item = e.target.closest(".js-open-tab2-detail");
-    if (!item) return;
-    openDetail(item.dataset.detail);
-  });
+  document.addEventListener("click", (e) => {
+    const openItem = e.target.closest(".js-open-tab2-detail");
+    if (openItem) {
+      openDetail(openItem.dataset.detail);
+      return;
+    }
 
-  $("#tab2DetailNav")?.addEventListener("click", (e) => {
-    const btn = e.target.closest(".tab2-detail__nav-btn");
-    if (!btn) return;
-    openDetail(btn.dataset.detail);
+    const navBtn = e.target.closest(".tab2-detail__nav-btn");
+    if (navBtn) {
+      openDetail(navBtn.dataset.detail);
+    }
   });
 
   homeLink?.addEventListener("click", (e) => {
     e.preventDefault();
     closeDetail();
-    history.pushState?.(null, "", "index.html#tab2");
+
+    if (history.pushState) {
+      history.pushState(null, "", "index.html#tab2");
+    } else {
+      window.location.hash = "tab2";
+    }
   });
 
   if (window.location.hash === "#tab2") {
     landing.classList.remove("is-detail-open");
-    setTimeout(() => scrollToEl(tab2), 100);
+    setTimeout(() => {
+      restartSwiper(swiperInstances.tab2);
+      scrollToEl(tab2);
+    }, 100);
   }
 }
 
@@ -410,7 +447,7 @@ function initTab2Detail() {
 
 function renderTab3Nav() {
   const nav = $("#tab3Nav");
-  if (!nav) return;
+  if (!nav || nav.children.length > 0) return;
 
   nav.innerHTML = sectKeys
     .map((key, index) => {
@@ -495,3 +532,14 @@ function initNavRight() {
     });
   });
 }
+
+/* Fallback nếu HTML cũ vẫn còn onclick="toggleNavRight()" */
+window.toggleNavRight = function toggleNavRight() {
+  const navRight = $("#navRight");
+  if (!navRight) return;
+  navRight.classList.toggle("is-collapsed");
+};
+
+window.scrollToTop = function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
