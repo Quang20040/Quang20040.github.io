@@ -1,6 +1,10 @@
 "use strict";
 
-
+/* =====================================================
+   MAIN.JS - CLEAN FINAL
+   Dùng được với HTML tối ưu mới.
+   Vẫn có fallback để không vỡ nếu một vài block HTML cũ còn tồn tại.
+===================================================== */
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
@@ -383,16 +387,12 @@ function initTab2Detail() {
   const tab2 = $("#tab2");
   const detailTitle = $("#tab2DetailTitle");
   const detailContent = $("#tab2DetailContent");
-  const homeLink = $(".tab2-detail__home");
 
   if (!landing || !detailTitle || !detailContent) return;
 
-  const openDetail = (type) => {
+  const setDetailContent = (type) => {
     const detail = tab2Details[type];
-    if (!detail) return;
-
-    landing.classList.add("is-detail-open");
-    swiperInstances.tab2?.autoplay?.stop();
+    if (!detail) return false;
 
     detailTitle.textContent = detail.title;
     detailContent.innerHTML = detail.content || "";
@@ -401,6 +401,14 @@ function initTab2Detail() {
       btn.classList.toggle("is-active", btn.dataset.detail === type);
     });
 
+    return true;
+  };
+
+  const showDetail = (type) => {
+    if (!setDetailContent(type)) return;
+
+    landing.classList.add("is-detail-open");
+    swiperInstances.tab2?.autoplay?.stop();
     scrollToEl(landing);
   };
 
@@ -410,31 +418,75 @@ function initTab2Detail() {
     scrollToEl(tab2 || landing);
   };
 
+  if (history.replaceState) {
+    history.replaceState({ view: "tab2-main" }, "", window.location.href);
+  }
+
   document.addEventListener("click", (e) => {
+    const closeBtn = e.target.closest(".tab2-detail__home, .js-close-tab2-detail");
+    if (closeBtn) {
+      e.preventDefault();
+      closeDetail();
+
+      if (history.pushState) {
+        history.pushState({ view: "tab2-main" }, "", "#tab2");
+      } else {
+        window.location.hash = "tab2";
+      }
+
+      return;
+    }
+
     const openItem = e.target.closest(".js-open-tab2-detail");
     if (openItem) {
-      openDetail(openItem.dataset.detail);
+      e.preventDefault();
+
+      const type = openItem.dataset.detail;
+      showDetail(type);
+
+      if (history.pushState) {
+        history.pushState({ view: "tab2-detail", type }, "", `#${type}`);
+      } else {
+        window.location.hash = type;
+      }
+
       return;
     }
 
     const navBtn = e.target.closest(".tab2-detail__nav-btn");
     if (navBtn) {
-      openDetail(navBtn.dataset.detail);
+      e.preventDefault();
+
+      const type = navBtn.dataset.detail;
+      showDetail(type);
+
+      if (history.replaceState) {
+        history.replaceState({ view: "tab2-detail", type }, "", `#${type}`);
+      } else {
+        window.location.hash = type;
+      }
     }
   });
 
-  homeLink?.addEventListener("click", (e) => {
-    e.preventDefault();
+  window.addEventListener("popstate", (event) => {
+    const state = event.state;
+
+    if (state?.view === "tab2-detail" && state.type) {
+      showDetail(state.type);
+      return;
+    }
+
     closeDetail();
-
-    if (history.pushState) {
-      history.pushState(null, "", "index.html#tab2");
-    } else {
-      window.location.hash = "tab2";
-    }
   });
 
-  if (window.location.hash === "#tab2") {
+  const initialType = window.location.hash.replace("#", "");
+  if (tab2Details[initialType]) {
+    showDetail(initialType);
+
+    if (history.replaceState) {
+      history.replaceState({ view: "tab2-detail", type: initialType }, "", `#${initialType}`);
+    }
+  } else if (window.location.hash === "#tab2") {
     landing.classList.remove("is-detail-open");
     setTimeout(() => {
       restartSwiper(swiperInstances.tab2);

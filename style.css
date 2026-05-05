@@ -422,6 +422,9 @@ a,
   width: 100%;
   aspect-ratio: 334 / 432;
   cursor: pointer;
+  display: block;
+  color: inherit;
+  text-decoration: none;
 }
 
 .item-mask {
@@ -750,8 +753,8 @@ a,
 
 .tab3__hero--cai-bang {
   left: 0%;
-  bottom: -18%;
-  width: 38%;
+  bottom: -15%;
+  width: 31%;
 }
 
 .tab3__hero--con-lon {
@@ -1320,6 +1323,7 @@ a,
     filter: brightness(1.15);
   }
 
+  /* TAB 2 hover desktop */
   .item-tab2:hover .item-bg {
     transform: translate(-58%, -50%);
   }
@@ -1383,6 +1387,7 @@ a,
     filter: brightness(0.85);
   }
 
+  /* TAB 4 chỉ hover trên desktop */
   .tab4__center-btn:hover {
     transform: translate(-50%, -50%) scale(1.08);
     filter: brightness(1.15);
@@ -1744,9 +1749,9 @@ a,
   .tab3__hero--cai-bang,
   .tab3__hero--thien-vuong,
   .tab3__hero--thieu-lam {
-    left: -12%;
+    left: -0%;
     bottom: -13vw;
-    width: 72%;
+    width: 50%;
   }
 
   .tab3__hero--con-lon,
@@ -1757,9 +1762,9 @@ a,
   }
 
   .tab3__hero--doan-thi {
-    left: -7%;
+    left: 0%;
     bottom: -9vw;
-    width: 66%;
+    width: 50%;
   }
 
   .tab3__hero--minh-giao,
@@ -1956,35 +1961,80 @@ a,
   }
 }
 
-/* ================= MOBILE ACTIVE ================= */
+/* ================= MOBILE TAP EFFECT ================= */
 
 @media (hover: none) and (pointer: coarse) {
+  /* TAB 2 mobile: chạm vào vẫn có hiệu ứng giống hover desktop */
+  .item-tab2:active .item-bg {
+    transform: translate(-58%, -50%);
+  }
+
+  .item-tab2:active .item-nv {
+    transform: translateX(-50%);
+  }
+
+  .item-tab2:active .item-button {
+    transform: translateX(-50%) scale(1.04);
+    filter: brightness(1.08);
+  }
+
+  .item-tab2--tin-tuc:active .item-bg {
+    transform: translate(-56%, -50%);
+  }
+
+  .item-tab2--su-kien:active .item-bg {
+    transform: translate(-60%, -50%);
+  }
+
+  .item-tab2--thong-bao:active .item-bg {
+    transform: translate(-57%, -50%);
+  }
+
+  .item-tab2--cskh:active .item-bg {
+    transform: translate(-58%, -50%);
+  }
+
+  .item-tab2--tin-tuc:active .item-nv,
+  .item-tab2--su-kien:active .item-nv,
+  .item-tab2--thong-bao:active .item-nv,
+  .item-tab2--cskh:active .item-nv {
+    transform: translateX(-57%);
+  }
+
   .item-tab2:active {
-    transform: scale(0.97);
+    transform: scale(0.98);
+  }
+
+  /* Nút tab2 vẫn có phản hồi trên mobile */
+  .tab2__arrow:active,
+  .tab2-detail__nav-btn:active {
+    transform: scale(0.96);
+    filter: brightness(1.08);
+  }
+
+  /* Tab3 vẫn có phản hồi nhẹ */
+  .tab3__sect-btn:active,
+  .tab3__tag:active {
+    transform: scale(0.96);
   }
 
   .download-mobile button:active,
-  .tab2__arrow:active,
-  .tab2-detail__nav-btn:active,
-  .tab3__sect-btn:active,
-  .tab3__tag:active,
   .nav-right__downloads a:active {
     transform: scale(0.96);
   }
 
-  .item-button:active {
+  .nav-right__top:active {
     transform: translateX(-50%) scale(0.96);
   }
 
+  /* TAB 4 mobile: không hover, không active */
   .tab4__center-btn:active {
-    transform: translate(-50%, -50%) scale(0.96);
+    transform: translate(-50%, -50%);
+    filter: none;
   }
 
   .tab4__arrow:active {
-    transform: translateY(-50%) scale(0.96);
-  }
-
-  .nav-right__top:active {
-    transform: translateX(-50%) scale(0.96);
+    transform: translateY(-50%);
+    filter: none;
   }
 }
