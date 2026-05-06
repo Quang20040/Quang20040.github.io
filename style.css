@@ -734,71 +734,89 @@ a,
 }
 
 .tab3__hero--ba-dao {
-  left: -8.5%;
+  left: -10.5%;
   bottom: -25%;
-  width: 48%;
+  width: 55%;
 }
 
 .tab3__hero--co-mo {
-  left: 0%;
-  bottom: -8%;
-  width: 40%;
+  left: -13%;
+  bottom: -22%;
+  width: 50%;
 }
 
 .tab3__hero--ngu-doc {
   left: -5%;
-  bottom: -17%;
+  bottom: -19%;
   width: 42%;
 }
 
 .tab3__hero--cai-bang {
   left: 0%;
   bottom: -15%;
-  width: 31%;
+  width: 30%;
 }
 
 .tab3__hero--con-lon {
-  left: 0%;
-  bottom: -9%;
-  width: 40%;
+  left: 5%;
+  bottom: -13%;
+  width: 31%;
 }
 
 .tab3__hero--doan-thi {
   left: 0%;
-  bottom: -9%;
-  width: 35%;
-}
-
-.tab3__hero--duong-mon {
-  left: 0%;
-  bottom: -18%;
+  bottom: -2%;
   width: 40%;
 }
 
-.tab3__hero--minh-giao,
-.tab3__hero--nga-mi,
-.tab3__hero--thien-nhan,
-.tab3__hero--thien-vuong,
-.tab3__hero--thuy-yen,
-.tab3__hero--vo-dang,
-.tab3__hero--thieu-lam {
+.tab3__hero--duong-mon {
+  left: 2%;
+  bottom: -18%;
+  width: 36%;
+}
+
+
+.tab3__hero--nga-mi{
   left: 0%;
   width: 35%;
+  bottom: -15%;
+}
+
+.tab3__hero--thien-nhan {
+    left: -5%;
+  width: 47%;
+  bottom: -10%;
 }
 
 .tab3__hero--minh-giao {
-  bottom: -8%;
+    left: 0%;
+  width: 32%;
+  bottom: -19%;
 }
 
-.tab3__hero--nga-mi,
-.tab3__hero--thien-nhan,
-.tab3__hero--thien-vuong,
-.tab3__hero--vo-dang,
+.tab3__hero--thien-vuong {
+    left: 0%;
+  width: 35%;
+  bottom: -18%;
+}
+
+.tab3__hero--vo-dang{
+    left: 0%;
+  width: 32%;
+  bottom: -20%;
+}
+
+
+
 .tab3__hero--thieu-lam {
+  left: 0%;
+  width: 35%;
   bottom: -10%;
 }
 
 .tab3__hero--thuy-yen {
+  left: -3%;
+  width: 45%;
   bottom: -2%;
 }
 
@@ -1732,52 +1750,75 @@ a,
     width: 70%;
   }
 
-  .tab3__hero--co-mo,
-  .tab3__hero--nga-mi,
-  .tab3__hero--thuy-yen {
+  .tab3__hero--co-mo {
     left: -6%;
-    bottom: -8vw;
-    width: 64%;
+    bottom: -12vw;
+    width: 60%;
+  }
+  .tab3__hero--nga-mi
+ {
+    left:0%;
+    bottom: -10vw;
+    width: 55%;
+  }
+    .tab3__hero--thuy-yen {
+    left: -3%;
+    bottom: -1vw;
+    width: 60%;
   }
 
   .tab3__hero--ngu-doc {
-    left: -9%;
+    left: -5%;
     bottom: -10vw;
-    width: 68%;
+    width: 55%;
   }
 
-  .tab3__hero--cai-bang,
-  .tab3__hero--thien-vuong,
-  .tab3__hero--thieu-lam {
-    left: -0%;
-    bottom: -13vw;
+  .tab3__hero--cai-bang {
+    left: 0%;
+    bottom: -15vw;
     width: 50%;
+  }
+  
+  .tab3__hero--thieu-lam {
+    left: 0%;
+    bottom: -5vw;
+    width: 53%;
   }
 
   .tab3__hero--con-lon,
   .tab3__hero--duong-mon {
-    left: -10%;
-    bottom: -12vw;
-    width: 70%;
+    left: 5%;
+    bottom: -15vw;
+    width: 50%;
   }
 
   .tab3__hero--doan-thi {
     left: 0%;
-    bottom: -9vw;
+    bottom: -2vw;
     width: 50%;
   }
 
-  .tab3__hero--minh-giao,
-  .tab3__hero--thien-nhan {
-    left: -10%;
+  .tab3__hero--minh-giao{
+    left: 0%;
     bottom: -11vw;
-    width: 69%;
+    width: 50%;
+  }
+  .tab3__hero--thien-nhan {
+    left: -7%;
+    bottom: -4vw;
+    width: 60%;
   }
 
   .tab3__hero--vo-dang {
-    left: -8%;
-    bottom: -10vw;
-    width: 67%;
+    left: 0%;
+    bottom: -15vw;
+    width: 50%;
+  }
+  .tab3__hero--thien-vuong
+   {
+    left: 2%;
+    bottom: -15vw;
+    width: 50%;
   }
 
   .tab3__stats {

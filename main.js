@@ -1,15 +1,8 @@
 "use strict";
 
-/* =====================================================
-   MAIN.JS - CLEAN FINAL
-   Dùng được với HTML tối ưu mới.
-   Vẫn có fallback để không vỡ nếu một vài block HTML cũ còn tồn tại.
-===================================================== */
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
-
-const swiperInstances = {};
 
 const imgTag = (src, alt = "", lazy = true) => {
   const lazyAttrs = lazy ? ' loading="lazy" decoding="async"' : "";
@@ -18,62 +11,11 @@ const imgTag = (src, alt = "", lazy = true) => {
 
 const repeat = (src, times) => Array.from({ length: times }, () => src);
 
-const scrollToEl = (el) => {
-  if (!el) return;
-  el.scrollIntoView({ behavior: "smooth", block: "start" });
-};
-
 /* ================= DATA ================= */
 
 const sliderData = {
   tab2: repeat("public/tab2/slide.webp", 5),
   tab4: repeat("public/tab4/slide.webp", 7),
-};
-
-const tab2Cards = [
-  {
-    id: "tin-tuc",
-    title: "Cẩm Nang Tổng Hợp",
-    bg: "public/tab2/1.webp",
-    character: "public/tab2/nv1.webp",
-    openDetail: true,
-  },
-  {
-    id: "su-kien",
-    title: "Sự Kiện Đặc Biệt",
-    bg: "public/tab2/3.webp",
-    character: "public/tab2/nv2.webp",
-    openDetail: true,
-  },
-  {
-    id: "thong-bao",
-    title: "Hướng Dẫn Tân Thủ",
-    bg: "public/tab2/2.webp",
-    character: "public/tab2/nv3.webp",
-    openDetail: true,
-  },
-  {
-    id: "cskh",
-    title: "CSKH Hỗ Trợ",
-    bg: "public/tab2/4.webp",
-    character: "public/tab2/nv4.webp",
-    openDetail: false,
-  },
-];
-
-const tab2Details = {
-  "tin-tuc": {
-    title: "Tin Tức",
-    content: "",
-  },
-  "su-kien": {
-    title: "Sự Kiện",
-    content: "",
-  },
-  "thong-bao": {
-    title: "Thông Báo",
-    content: "",
-  },
 };
 
 const sectData = {
@@ -88,6 +30,7 @@ const sectData = {
     tag2: "Thiên La",
     desc: "Với Kỹ năng Thiên Ngoại Lưu Tinh tấn công phạm vi rộng từ khoảng cách xa, sát thương cộng dồn, chủ lực trong các cuộc hỗn chiến. Thêm vào một số bùa chú lợi hại, Thiên Nhẫn Đao là một vị trí không thể thiếu trong các cuộc chiến lớn.",
   },
+
   "co-mo": {
     name: "Cổ Mộ",
     icon: "btn-como.webp",
@@ -99,6 +42,7 @@ const sectData = {
     tag2: "Kiếm Mộ",
     desc: "Tấn công tầm xa trong khoảng cách gần hệ nội công, phạm vi tấn công khá ngắn, xa hơn so với hệ phái cận chiến, chí mạng rất mạnh. Thời gian xung kích ngắn, cơ động, mạnh trong PK đơn, hội đồng khá tốt.",
   },
+
   "ngu-doc": {
     name: "Ngũ Độc",
     icon: "btn-ngudoc.webp",
@@ -110,6 +54,7 @@ const sectData = {
     tag2: "Ngoại Công",
     desc: "Cưỡi ngựa tấn công phạm vi nhỏ phía trước, Vô Hình Độc của Ngũ Độc Đao khiến kẻ thù xung quanh nhiễm độc, giảm khả năng kháng độc đồng thời tăng thời gian trúng độc của địch.",
   },
+
   "cai-bang": {
     name: "Cái Bang",
     icon: "btn-caibang.webp",
@@ -121,6 +66,7 @@ const sectData = {
     tag2: "Bổng Pháp",
     desc: "Hội tụ đủ cả 2 khả năng tấn công từ xa một cá nhân hoặc trên một phạm vi rộng kèm theo khả năng truy kích, lấy tấn công làm thế mạnh của mình. Một trong các hệ phái được anh hùng ưa chuộng nhất dòng Kiếm Thế.",
   },
+
   "con-lon": {
     name: "Côn Lôn",
     icon: "btn-conlon.webp",
@@ -132,6 +78,7 @@ const sectData = {
     tag2: "Đao Pháp",
     desc: "Tấn công nhiều mục tiêu, phạm vi cực rộng, hóa giải sát thương, hỗ trợ đồng đội tăng sức chiến đấu và tốc độ di chuyển. Khi sinh mệnh rơi vào trạng thái nguy cấp thì có thể kích hoạt năng lực né tránh hoàn toàn, tăng tốc độ di chuyển và hồi phục sinh mệnh.",
   },
+
   "doan-thi": {
     name: "Đoàn Thị",
     icon: "btn-doanthi.webp",
@@ -143,6 +90,7 @@ const sectData = {
     tag2: "Chỉ Đoàn",
     desc: "Có thể tấn công vùng rộng từ khoảng cách hoặc tấn công cá thể ở khoảng cách gần đều được, có hiệu quả truy sát. Với kỹ năng Bắc Minh Thần Công có thể giúp bản thân và đồng đội hóa giải một lượng sát thương nhất định.",
   },
+
   "duong-mon": {
     name: "Đường Môn",
     icon: "btn-duongmon.webp",
@@ -154,6 +102,7 @@ const sectData = {
     tag2: "Hàm Tĩnh",
     desc: "Cưỡi ngựa tấn công kẻ địch cùng kỹ năng Bạo Vũ Lê Hoa cấp 90 làm mưa làm gió gây ra nhiều tổn hại liên tục. Tính cơ động và khả năng né tránh cao. Ngoài ra kỹ năng Tôi Độc Thuật của Đường Môn Tiễn có khả năng hỗ trợ đồng đội, tăng tốc độ di chuyển và hồi phục sinh mệnh.",
   },
+
   "minh-giao": {
     name: "Minh Giáo",
     icon: "btn-minhgiao.webp",
@@ -165,6 +114,7 @@ const sectData = {
     tag2: "Kiếm",
     desc: "Một chiến binh cận chiến trên lưng ngựa, tấn công đối thủ một cách nhanh chóng và cơ động. Nổi tiếng với Kim Qua Thiết Mã, có thể giúp đồng đội và bản thân gia tăng khả năng công kích tất sát.",
   },
+
   "nga-mi": {
     name: "Nga Mi",
     icon: "btn-ngamy.webp",
@@ -176,6 +126,7 @@ const sectData = {
     tag2: "Kiếm Pháp",
     desc: "Tấn công từ xa, có hiệu quả truy sát, gây sát thương khá lớn trên một địch thủ, lại có khả năng hồi phục tương đối để hỗ trợ cho bản thân và cho đồng đội.",
   },
+
   "thien-nhan": {
     name: "Thiên Nhẫn",
     icon: "btn-thiennhan.webp",
@@ -187,6 +138,7 @@ const sectData = {
     tag2: "Thương Pháp",
     desc: "Với Kỹ năng Thiên Ngoại Lưu Tinh tấn công phạm vi rộng từ khoảng cách xa, sát thương cộng dồn, chủ lực trong các cuộc hỗn chiến. Thêm vào một số bùa chú lợi hại, Thiên Nhẫn Đao là một vị trí không thể thiếu trong các cuộc chiến lớn.",
   },
+
   "thien-vuong": {
     name: "Thiên Vương",
     icon: "btn-thienvuong.webp",
@@ -198,6 +150,7 @@ const sectData = {
     tag2: "Chùy Pháp",
     desc: "Lấy ngoại công làm trọng. Tấn công cận chiến, đơn lẻ, Thiên Vương Thương cùng với kỹ năng tên tuổi Truy Tinh Trục Nguyệt với tốc độ nhanh, sát thương lớn khiến kẻ địch bị tiêu diệt nhanh chóng.",
   },
+
   "thuy-yen": {
     name: "Thúy Yên",
     icon: "btn-thuyyen.webp",
@@ -209,6 +162,7 @@ const sectData = {
     tag2: "Đao Pháp",
     desc: "Tấn công từ xa, sở trường tấn công nhiều người cùng lúc, có khả năng giảm đi những hiệu ứng bất lợi trên cơ thể.",
   },
+
   "vo-dang": {
     name: "Võ Đang",
     icon: "btn-vodang.webp",
@@ -220,6 +174,7 @@ const sectData = {
     tag2: "Kiếm Pháp",
     desc: "Tấn công phạm vi rộng từ xa, gây hiệu quả cộng dồn. Với kỹ năng Tọa Vọng làm nên tên tuổi Võ Đang, dùng nội lực hóa giải sát thương, có vai trò cực kì quan trọng trong các trận hỗn chiến và tăng tấn công nội công của đồng đội.",
   },
+
   "thieu-lam": {
     name: "Thiếu Lâm",
     icon: "btn-thieulam.webp",
@@ -241,11 +196,9 @@ document.addEventListener("DOMContentLoaded", () => {
   renderSlides("#tab2Slides", sliderData.tab2);
   renderSlides("#tab4Slides", sliderData.tab4);
 
-  renderTab2Cards();
-  renderTab2DetailNav();
   renderTab3Nav();
 
-  swiperInstances.tab2 = initSwiper(".tab2Swiper", {
+  initSwiper(".tab2Swiper", {
     delay: 2500,
     nextEl: ".tab2__arrow--next",
     prevEl: ".tab2__arrow--prev",
@@ -253,7 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
     dotClass: "tab2__dot",
   });
 
-  swiperInstances.tab4 = initSwiper(".tab4Swiper", {
+  initSwiper(".tab4Swiper", {
     delay: 3000,
     nextEl: ".tab4__arrow--next",
     prevEl: ".tab4__arrow--prev",
@@ -261,7 +214,6 @@ document.addEventListener("DOMContentLoaded", () => {
     dotClass: "tab4__dot",
   });
 
-  initTab2Detail();
   initTab3Sect();
   initNavRight();
 });
@@ -316,183 +268,6 @@ function initSwiper(selector, config) {
       renderBullet: (_, className) => `<span class="${className}"></span>`,
     },
   });
-}
-
-function restartSwiper(swiper) {
-  if (!swiper) return;
-
-  setTimeout(() => {
-    swiper.update();
-    swiper.slideToLoop?.(swiper.realIndex || 0, 0, false);
-
-    if (swiper.autoplay) {
-      swiper.autoplay.stop();
-      swiper.autoplay.start();
-    }
-  }, 120);
-}
-
-/* ================= TAB 2 ================= */
-
-function renderTab2Cards() {
-  const container = $("#tab2Cards");
-  if (!container || container.children.length > 0) return;
-
-  container.innerHTML = tab2Cards
-    .map((card) => {
-      const openClass = card.openDetail ? " js-open-tab2-detail" : "";
-
-      return `
-        <div class="item-tab2 item-tab2--${card.id}${openClass}" data-detail="${card.id}">
-          <div class="item-mask">
-            <div class="item-bg">
-              ${imgTag(card.bg, card.title)}
-            </div>
-
-            <div class="item-nv">
-              ${imgTag(card.character, card.title)}
-            </div>
-          </div>
-
-          <div class="item-khung">
-            ${imgTag("public/tab2/khung.webp", "")}
-          </div>
-
-          <button type="button" class="item-button">
-            ${imgTag("public/tab2/button-text.webp", "")}
-            <span>${card.title}</span>
-          </button>
-        </div>
-      `;
-    })
-    .join("");
-}
-
-function renderTab2DetailNav() {
-  const nav = $("#tab2DetailNav");
-  if (!nav || nav.children.length > 0) return;
-
-  nav.innerHTML = Object.entries(tab2Details)
-    .map(([key, detail], index) => `
-      <button class="tab2-detail__nav-btn${index === 0 ? " is-active" : ""}" type="button" data-detail="${key}">
-        ${imgTag("public/tab2/button-text.webp", "")}
-        <span>${detail.title}</span>
-      </button>
-    `)
-    .join("");
-}
-
-function initTab2Detail() {
-  const landing = $(".landing");
-  const tab2 = $("#tab2");
-  const detailTitle = $("#tab2DetailTitle");
-  const detailContent = $("#tab2DetailContent");
-
-  if (!landing || !detailTitle || !detailContent) return;
-
-  const setDetailContent = (type) => {
-    const detail = tab2Details[type];
-    if (!detail) return false;
-
-    detailTitle.textContent = detail.title;
-    detailContent.innerHTML = detail.content || "";
-
-    $$(".tab2-detail__nav-btn").forEach((btn) => {
-      btn.classList.toggle("is-active", btn.dataset.detail === type);
-    });
-
-    return true;
-  };
-
-  const showDetail = (type) => {
-    if (!setDetailContent(type)) return;
-
-    landing.classList.add("is-detail-open");
-    swiperInstances.tab2?.autoplay?.stop();
-    scrollToEl(landing);
-  };
-
-  const closeDetail = () => {
-    landing.classList.remove("is-detail-open");
-    restartSwiper(swiperInstances.tab2);
-    scrollToEl(tab2 || landing);
-  };
-
-  if (history.replaceState) {
-    history.replaceState({ view: "tab2-main" }, "", window.location.href);
-  }
-
-  document.addEventListener("click", (e) => {
-    const closeBtn = e.target.closest(".tab2-detail__home, .js-close-tab2-detail");
-    if (closeBtn) {
-      e.preventDefault();
-      closeDetail();
-
-      if (history.pushState) {
-        history.pushState({ view: "tab2-main" }, "", "#tab2");
-      } else {
-        window.location.hash = "tab2";
-      }
-
-      return;
-    }
-
-    const openItem = e.target.closest(".js-open-tab2-detail");
-    if (openItem) {
-      e.preventDefault();
-
-      const type = openItem.dataset.detail;
-      showDetail(type);
-
-      if (history.pushState) {
-        history.pushState({ view: "tab2-detail", type }, "", `#${type}`);
-      } else {
-        window.location.hash = type;
-      }
-
-      return;
-    }
-
-    const navBtn = e.target.closest(".tab2-detail__nav-btn");
-    if (navBtn) {
-      e.preventDefault();
-
-      const type = navBtn.dataset.detail;
-      showDetail(type);
-
-      if (history.replaceState) {
-        history.replaceState({ view: "tab2-detail", type }, "", `#${type}`);
-      } else {
-        window.location.hash = type;
-      }
-    }
-  });
-
-  window.addEventListener("popstate", (event) => {
-    const state = event.state;
-
-    if (state?.view === "tab2-detail" && state.type) {
-      showDetail(state.type);
-      return;
-    }
-
-    closeDetail();
-  });
-
-  const initialType = window.location.hash.replace("#", "");
-  if (tab2Details[initialType]) {
-    showDetail(initialType);
-
-    if (history.replaceState) {
-      history.replaceState({ view: "tab2-detail", type: initialType }, "", `#${initialType}`);
-    }
-  } else if (window.location.hash === "#tab2") {
-    landing.classList.remove("is-detail-open");
-    setTimeout(() => {
-      restartSwiper(swiperInstances.tab2);
-      scrollToEl(tab2);
-    }, 100);
-  }
 }
 
 /* ================= TAB 3 ================= */

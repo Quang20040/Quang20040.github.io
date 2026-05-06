@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chi Tiết - Kiếm Tôn Origin</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .news-page {
+      position: relative;
+      z-index: 5;
+      width: 100%;
+      min-height: 72vw;
+      padding: 2vw 0 5vw;
+      overflow: hidden;
+    }
+
+    .news-page .tab2-detail__nav-btn {
+      display: block;
+      text-decoration: none;
+    }
+
+    .news-page__title {
+      margin-bottom: 1.2vw;
+      font-size: 1.15vw;
+      line-height: 1.35;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    .news-page__text {
+      font-size: 0.95vw;
+      line-height: 1.7;
+      color: #fff;
+    }
+
+    .news-page__empty {
+      opacity: 0.9;
+    }
+
+    @media (max-width: 767px) {
+      .news-page {
+        min-height: 100vh;
+        padding: 8vh 0 6vh;
+      }
+
+      .news-page .tab2-detail__dao {
+        display: none;
+      }
+
+      .news-page__title {
+        margin-bottom: 4vw;
+        font-size: 4vw;
+      }
+
+      .news-page__text {
+        font-size: 3.35vw;
+        line-height: 1.65;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <a href="index.html" class="header-item home">
+      <img src="public/header/home.webp" alt="">
+      <span>Trang chủ</span>
+    </a>
+
+    <a href="https://www.facebook.com/..." class="header-item fb" target="_blank" rel="noopener noreferrer">
+      <img src="public/header/fb.webp" alt="">
+      <span>Facebook</span>
+    </a>
+
+    <a href="https://www.facebook.com/groups/..." class="header-item group" target="_blank" rel="noopener noreferrer">
+      <img src="public/header/group.webp" alt="">
+      <span>Group</span>
+    </a>
+  </header>
+
+  <!-- TAB 1 giữ giống trang chủ -->
+  <section class="tab1">
+    <div class="background">
+      <img src="public/tab1/bg-desktop.webp" class="bg-desktop" alt="">
+      <img src="public/tab1/bg-mobile.webp" class="bg-mobile" alt="">
+    </div>
+
+    <div class="tab1-left">
+      <div class="character-male">
+        <img src="public/tab1/nv-nam.webp" alt="">
+      </div>
+
+      <div class="character-female">
+        <img src="public/tab1/nv-nu.webp" alt="">
+      </div>
+
+      <div class="sect sect-male">
+        <img src="public/tab1/bá đao.webp" alt="">
+      </div>
+
+      <div class="sect sect-female">
+        <img src="public/tab1/cổ mộ.webp" alt="">
+      </div>
+    </div>
+
+    <div class="tab1-right">
+      <div class="logo">
+        <img src="public/tab1/logo.webp" alt="Kiếm Tôn Origin">
+      </div>
+
+      <div class="slogan">
+        <img src="public/tab1/clould.webp" class="slogan-cloud" alt="">
+        <img src="public/tab1/t_n.webp" class="slogan-img" alt="">
+        <p>Phiên Bản Đặc Biệt 14 Phái</p>
+      </div>
+    </div>
+
+    <div class="download-mobile">
+      <button type="button" aria-label="Tải game">
+        <img src="public/tab1/hẹn ước kiếm tôn.webp" alt="">
+      </button>
+    </div>
+  </section>
+
+
+  <main class="landing">
+    <div class="landing__bg landing__bg--desktop">
+      <img src="public/tab2/landing desktop.webp" alt="">
+    </div>
+
+    <div class="landing__bg landing__bg--mobile">
+      <img src="public/tab2/landing mobile.webp" alt="">
+    </div>
+
+    <section class="news-page">
+     
+      <img class="tab2-detail__dao" src="public/tab2/peach.webp" alt="" aria-hidden="true">
+
+      <nav class="tab2-detail__nav" aria-label="Danh mục chi tiết">
+        <a class="tab2-detail__nav-btn" href="detail.html?type=tin-tuc" data-type="tin-tuc">
+          <img src="public/tab2/button-text.webp" alt="">
+          <span>Tin Tức</span>
+        </a>
+
+        <a class="tab2-detail__nav-btn" href="detail.html?type=su-kien" data-type="su-kien">
+          <img src="public/tab2/button-text.webp" alt="">
+          <span>Sự Kiện</span>
+        </a>
+
+        <a class="tab2-detail__nav-btn" href="detail.html?type=thong-bao" data-type="thong-bao">
+          <img src="public/tab2/button-text.webp" alt="">
+          <span>Thông Báo</span>
+        </a>
+      </nav>
+
+      <div class="tab2-detail__box">
+        <div class="tab2-detail__breadcrumb">
+          <a href="index.html#tab2">Trang chủ</a>
+          <span>/</span>
+          <span id="detailBreadcrumb">Tin Tức</span>
+        </div>
+
+        <div class="tab2-detail__content">
+        
+
+          <div class="news-page__text news-page__empty" id="detailContent">
+           
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <div class="site-footer__brand">
+        <div class="site-footer__logo">
+          <img src="public/ft/skyway.webp" alt="Skyway">
+        </div>
+
+        <div class="site-footer__badge site-footer__badge--mobile">
+          <img src="public/ft/18+ft.webp" alt="18+">
+        </div>
+      </div>
+
+      <div class="site-footer__content">
+        <div class="site-footer__links">
+          <a href="https://gzoneglobal.com/about-us.html" target="_blank" rel="noopener noreferrer">About Skw</a>
+          <span>|</span>
+          <a href="https://gzoneglobal.com/terms.html#" target="_blank" rel="noopener noreferrer">Điều Khoản</a>
+          <span>|</span>
+          <a href="#" aria-disabled="true">Tài Khoản</a>
+          <span>|</span>
+          <a href="https://pay.zoneplay.vn/" target="_blank" rel="noopener noreferrer">Nạp Thẻ</a>
+          <span>|</span>
+          <a href="https://gzoneglobal.com/contact.html" target="_blank" rel="noopener noreferrer">Hỗ trợ KH</a>
+        </div>
+
+        <div class="site-footer__text">
+          <p>Bản quyền © 2020 Gzone</p>
+          <p>CÔNG TY CỔ PHẦN SKYWAY</p>
+          <p>Email: Hotro@zune.vn | Hotline: 1900 088 885</p>
+          <p>Thời gian: 8:00 - 22:00 tất cả các ngày (GMT +7)</p>
+          <p>Giấy phép G1 số: 34/GP-BTTTT ngày 14 tháng 01 năm 2021</p>
+          <p>Chơi quá 180 phút một ngày sẽ ảnh hưởng xấu đến sức khỏe</p>
+          <p>Chịu trách nhiệm nội dung: Ông Nguyễn Văn Thắng</p>
+        </div>
+      </div>
+
+      <div class="site-footer__badge site-footer__badge--desktop">
+        <img src="public/ft/18+ft.webp" alt="18+">
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const detailData = {
+      "tin-tuc": {
+        title: "Tin Tức",
+        
+      },
+      "su-kien": {
+        title: "Sự Kiện",
+        
+      },
+      "thong-bao": {
+        title: "Thông Báo",
+       
+      },
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const type = params.get("type") || "tin-tuc";
+    const current = detailData[type] || detailData["tin-tuc"];
+
+    document.title = `${current.title} - Kiếm Tôn Origin`;
+   
+    document.getElementById("detailBreadcrumb").textContent = current.title;
+    document.getElementById("detailContent").textContent = current.content;
+
+    document.querySelectorAll(".tab2-detail__nav-btn").forEach((btn) => {
+      btn.classList.toggle("is-active", btn.dataset.type === type);
+    });
+  </script>
+</body>
+</html>
